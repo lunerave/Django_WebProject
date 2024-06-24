@@ -24,8 +24,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('main', Main.as_view()),
-    # path('content/upload', UploadFeed.as_view()),
-    path('', include('content.urls')),
+    path('content/', include('content.urls')),
+    path('user/', include('user.urls')),
 ]
 
 # media에 저장한 파일을 조회하기 위한 코드

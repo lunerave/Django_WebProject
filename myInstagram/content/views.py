@@ -14,6 +14,7 @@ class Main(APIView):
 
         return render(request, "myInstagram/main.html", context=dict(feeds=feed_list))
 
+
 class UploadFeed(APIView):
     def post(self, request):
         file = request.FILES['file']
