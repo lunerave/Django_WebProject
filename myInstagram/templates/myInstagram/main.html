@@ -291,7 +291,7 @@ bookmark
                 새 이미지 업로드
             </div>
             <div style="width: 20px">
-                <span class="material-symbols-outlined">
+                <span id="first_modal_close" class="material-symbols-outlined">
 close
 </span>
             </div>
@@ -312,7 +312,7 @@ close
                 새 이미지 업로드
             </div>
             <div style="width: 20px">
-                <span class="material-symbols-outlined">
+                <span id="second_modal_close" class="material-symbols-outlined">
 close
 </span>
             </div>
@@ -345,6 +345,14 @@ close
         $(document.body).css({
             overflow: 'hidden'
         });
+    });
+    
+    $('#first_modal_close').click(function () {
+        location.replace("/main");
+    });
+    
+    $('#second_modal_close').click(function () {
+        location.replace("/main");
     });
     
     $('#feed_create_btn').click(function (){
