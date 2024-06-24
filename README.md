@@ -5,7 +5,7 @@ This project is done for understanding basic functionalities of Django.
 Python : 3.10.11
 
 ## DB schema
-Feed Table: ID, Profile_Img, User, Feed_Img, User_Post
+Feed Table: ID, profile_image, user_id, image, content
 
 
 Comment Table: F_ID, User, User_Comment
