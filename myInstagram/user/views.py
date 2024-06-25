@@ -36,6 +36,7 @@ class Login(APIView):
 
         if user.check_password(password):
             # 로그인 성공. 세션 or 쿠키
+            request.session['email'] = email
             return Response(status=200)
         else:
             return Response(status=400, data=dict(message="회원 정보가 잘못되었습니다."))
