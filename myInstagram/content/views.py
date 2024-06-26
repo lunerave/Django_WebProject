@@ -14,8 +14,7 @@ class Main(APIView):
     def get(self, request):
         feed_list = Feed.objects.all().order_by('-id')
 
-        print(request.session['email'])
-        email = request.session['email']
+        email = request.session.get('email', None)
 
         if email is None:
             return render(request, "user/login.html")
