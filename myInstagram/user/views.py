@@ -1,8 +1,12 @@
+import os
+from uuid import uuid4
+
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User
 from django.contrib.auth.hashers import make_password
+from myInstagram.settings import MEDIA_ROOT
 
 
 # Create your views here.
@@ -46,3 +50,26 @@ class Logout(APIView):
     def get(self, request):
         request.session.flush()
         return render(request, 'user/login.html')
+
+
+class UploadProfile(APIView):
+    def post(self, request):
+        file = request.FILES['file']
+        uuid_name = uuid4().hex
+        save_path = os.path.join(MEDIA_ROOT, uuid_name)
+
+        # 실제로 파일을 저장하는 코드
+        with open(save_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+
+        profile_img = uuid_name
+
+        email = request.data.get('email')
+
+        user = User.objects.filter(email=email).first()
+
+        user.profile_img = profile_img
+        user.save()
+
+        return Response(status=200)

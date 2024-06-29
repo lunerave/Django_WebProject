@@ -126,7 +126,7 @@ favorite
             </div>
             <div>
                 <button id="button_profile_upload" style="margin-right: 40px">프로필 사진 편집</button>
-                <input type="file" id="input_file_upload" style="display: none"/>
+                <input type="file" id="input_file_upload" onchange="profile_upload()"/>
                 <span class="material-symbols-outlined">
 settings
 </span>
@@ -308,10 +308,39 @@ close
             return;
         }
     }
-    
+
     $('#button_profile_upload').click(function () {
         $('#input_file_upload').click();
-    })
+    });
+
+    function profile_upload() {
+        let file = $('#input_file_upload')[0].files[0];
+
+        let email = "{{ user.email }}";
+
+        let fd = new FormData();
+        fd.append('file', file);
+        fd.append('email', email);
+
+        $.ajax({
+            url: "/user/profile/upload",
+            data: fd,
+            method: "POST",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function(request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+                location.replace("/content/profile");
+            }
+        })
+
+    }
 </script>
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
