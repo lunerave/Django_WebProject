@@ -113,22 +113,20 @@ favorite
     <div style="padding: 20px 60px">
         <div class="box" style="width: 175px; height: 175px;">
 
-                        <img class="profile" src="{% get_media_prefix %}{{ user.profile_img }}">
+            <img class="profile" src="{% get_media_prefix %}{{ user.profile_img }}">
 
-                    </div>
+        </div>
     </div>
     <div style="text-align: left">
         <div style="display: flex; flex-direction: row; margin: 20px 0">
             <div style="font-size: 26px; margin-right: 40px">
-            {{ user.nickname }}
+                {{ user.nickname }}
             </div>
-            <div>
-                <button id="button_profile_upload" style="margin-right: 40px">프로필 사진 편집</button>
-                <input type="file" id="input_file_upload" style="display: none" onchange="profile_upload()"/>
-                <span class="material-symbols-outlined">
+            <button id="button_profile_upload" style="margin-right: 40px">프로필 사진 편집</button>
+            <input type="file" id="input_file_upload" onchange="profile_upload();" style="display: none"/>
+            <span class="material-symbols-outlined">
 settings
 </span>
-            </div>
         </div>
 
         <div style="margin-bottom: 20px">
@@ -138,7 +136,6 @@ settings
             <b>{{ user.name }}</b>
         </div>
     </div>
-
 </div>
 
 <!-- 첫 번째 모달 -->
