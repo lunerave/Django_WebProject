@@ -23,6 +23,9 @@ Favorite Table: F_ID, User, Favorite
     #migrate 명령어로 DB 생성
     python manage.py makemigrations
     python manage.py migrate
+
+    # 필요 package 설치
+    pip install -r requirements.txt
     
     #서버 실행
     python manage.py runserver
