@@ -26,7 +26,8 @@ class Main(APIView):
                 reply_list.append(dict(reply_content=reply.reply_content,
                                        nickname=reply_user.nickname))
 
-            feed_list.append(dict(image=feed.image,
+            feed_list.append(dict(id=feed.id,
+                                  image=feed.image,
                                   content=feed.content,
                                   like_count=feed.like_count,
                                   profile_image=user.profile_img,
@@ -87,11 +88,11 @@ class Profile(APIView):
 class UploadReply(APIView):
     def post(self, request):
 
-        feed_id = request.session.get('feed_id', None)
+        feed_id = request.data.get('feed_id', None)
         reply_content = request.data.get('reply_content', None)
         email = request.session.get('email', None)
 
-        Reply.objects.create(feed_id=feed_id, content=reply_content, email=email)
+        Reply.objects.create(feed_id=feed_id, reply_content=reply_content, email=email)
 
         return Response(status=200)
 
