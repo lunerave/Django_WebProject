@@ -151,10 +151,13 @@ bookmark
                 </div>
                 <div style="margin: 0 7px; text-align: left; font-size: 16px">
                     <b>{{ feed.user_id }}</b> {{ feed.content }}</div>
-                {% for reply in feed.reply_list %}
-                    <div style="margin: 0 7px; text-align: left; font-size: 14px">
-                        <b>{{ reply.nickname }}</b> {{ reply.reply_content }} </div>
-                {% endfor %}
+                
+                <div id="reply_list_{{ feed.id }}">
+                    {% for reply in feed.reply_list %}
+                        <div style="margin: 0 7px; text-align: left; font-size: 14px">
+                            <b>{{ reply.nickname }}</b> {{ reply.reply_content }} </div>
+                    {% endfor %}
+                </div>
 
                 <div style="display: flex; flex-direction: row;align-items: center; border-top: solid 1px grey">
                     <input id="reply_{{ feed.id }}" type="text" class="form-control"
@@ -384,13 +387,15 @@ close
             success: function (data) {
                 console.log("성공");
                 alert("댓글 입력에 성공하였습니다.");
-                location.replace('/main')
+                $("#reply_list_"+feed_id).append("<div style='margin: 0 7px;text-align: left;font-size: 14px'><b>{{ user.nickname }}</b> " + reply_content + "</div>")
+                {#location.replace('/main')#}
             },
             error: function (request, status, error) {
                 console.log("에러");
             },
             complete: function () {
                 console.log("완료");
+                $('#'+reply_id).val('');
             }
         })
         
