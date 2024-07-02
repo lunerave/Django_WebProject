@@ -8,12 +8,12 @@ Python : 3.10.11
 Feed Table: image, content, email
 
 
-Reply Table: content_id, email, reply_content
+Reply Table: feed_id, email, reply_content
 
 
-Like Table: content_id, email, is_like
+Like Table: feed_id, email, is_like
 
-Bookmark Table: content_id, email, is_marked
+Bookmark Table: feed_id, email, is_marked
 
 ## How to run
     #가상환경 생성 
