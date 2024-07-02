@@ -5,13 +5,15 @@ This project is done for understanding basic functionalities of Django.
 Python : 3.10.11
 
 ## DB schema
-Feed Table: ID, profile_image, user_id, image, content
+Feed Table: image, content, email
 
 
-Comment Table: F_ID, User, User_Comment
+Reply Table: content_id, email, reply_content
 
 
-Favorite Table: F_ID, User, Favorite 
+Like Table: content_id, email, is_like
+
+Bookmark Table: content_id, email, is_marked
 
 ## How to run
     #가상환경 생성 
