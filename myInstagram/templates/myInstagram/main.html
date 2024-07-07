@@ -79,7 +79,7 @@ home
             <span class="material-symbols-outlined" style="padding-right: 5px">
 send
 </span>
-            <span id="nav_add_box" class="material-symbols-outlined" style="padding-right: 5px">
+            <span id="nav_add_box" class="material-symbols-outlined" style="padding-right: 5px; cursor: pointer">
 add_box
 </span>
             <span class="material-symbols-outlined" style="padding-right: 5px">
@@ -132,14 +132,13 @@ favorite
                 </div>
                 <div style="margin: 0 7px; display: flex; flex-direction: row; justify-content: space-between">
                     <div style="display: flex; flex-direction: row">
+                        
                         <div>
+                        <span id="favorite_{{ feed.id }}" class="favorite material-symbols-outlined" style="color: red; cursor: pointer">
                             {% if feed.is_liked %}
-
-                                <span class="material-symbols-outlined" style="color: red">
 heart_check
 </span>
                             {% else %}
-                                <span class="material-symbols-outlined">
 favorite
 </span>
                             {% endif %}
@@ -381,6 +380,18 @@ close
 </div>
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
+    
+    $('.favorite').click(function (event) {
+        let favorite_id = event.target.id;
+        console.log(favorite_id);
+        let favorite_text = $.trim($('#'+favorite_id).html());
+        console.log(favorite_text);
+        if(favorite_text == 'favorite') {
+            $('#'+favorite_id).html('heart_check');
+        }else{
+            $('#'+favorite_id).html('favorite');
+        }
+    })
     
     $(".upload_reply").click(function (event) {
         let feed_id = event.target.attributes.getNamedItem('feed_id').value;
