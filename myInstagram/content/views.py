@@ -39,6 +39,7 @@ class Main(APIView):
 
             like_count = Like.objects.filter(feed_id=feed.id, is_like=True).count()
             is_liked = Like.objects.filter(feed_id=feed.id, email=email, is_like=True).exists()
+            is_marked = Bookmark.objects.filter(feed_id=feed.id, email=email, is_marked=True).exists()
             feed_list.append(dict(id=feed.id,
                                   image=feed.image,
                                   content=feed.content,
@@ -46,7 +47,8 @@ class Main(APIView):
                                   profile_image=feed_user.profile_img,
                                   nickname=feed_user.nickname,
                                   reply_list=reply_list,
-                                  is_liked=is_liked
+                                  is_liked=is_liked,
+                                  is_marked=is_marked,
                                   ))
 
         return render(request, "myInstagram/main.html", context=dict(feeds=feed_list, user=user))
@@ -107,6 +109,8 @@ class ToggleLike(APIView):
         feed_id = request.data.get('feed_id', None)
         favorite_text = request.data.get('favorite_text', True)
 
+        print(favorite_text)
+
         if favorite_text == 'favorite':
             is_like = True
         else:
@@ -121,6 +125,30 @@ class ToggleLike(APIView):
             like.save()
         else:
             Like.objects.create(feed_id=feed_id, is_like=is_like, email=email)
+
+        return Response(status=200)
+
+
+class ToggleBookmark(APIView):
+    def post(self, request):
+
+        feed_id = request.data.get('feed_id', None)
+        bookmark_text = request.data.get('bookmark_text', True)
+
+        if bookmark_text == 'bookmark':
+            is_marked = True
+        else:
+            is_marked = False
+
+        email = request.session.get('email', None)
+
+        bookmark = Bookmark.objects.filter(feed_id=feed_id, email=email).first()
+
+        if bookmark:
+            bookmark.is_marked = is_marked
+            bookmark.save()
+        else:
+            Bookmark.objects.create(feed_id=feed_id, is_marked=is_marked, email=email)
 
         return Response(status=200)
 
