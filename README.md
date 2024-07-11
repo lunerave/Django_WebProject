@@ -13,7 +13,11 @@ Reply Table: feed_id, email, reply_content
 
 Like Table: feed_id, email, is_like
 
+
 Bookmark Table: feed_id, email, is_marked
+
+
+User Table: password, profile_img, name, email, nickname
 
 ## How to run
     # Create virtual env(가상환경 생성) 
