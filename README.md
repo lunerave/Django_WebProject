@@ -78,6 +78,32 @@ This endpoint handles the main feed view for logged-in users. It processes user 
 
 6. **Render Page**:
     - Renders the `main.html` template with the context data.
+  
+#### Post /upload
+This endpoint handles to upload new feed for logged-in user. User uploads their feed with image and content of the feed.
+
+#### Features
+
+- **File Handling**: Handles file uploads and saves the uploaded file to a specified directory.
+- **Data Extraction**: Extracts content and email from the request data.
+- **Feed Creation**: Creates a new feed post with the uploaded image and content.
+
+#### Detailed Workflow
+
+1. **File Upload**:
+    - Retrieves the file from the request.
+    - Generates a unique filename using `uuid4`.
+    - Saves the file to the specified path.
+
+2. **Data Extraction**:
+    - Retrieves the content from the request data.
+    - Retrieves the email from the session data.
+
+3. **Feed Creation**:
+    - Creates a new `Feed` object with the uploaded image, content, and email.
+
+4. **Response**:
+    - Returns a 200 status response upon successful feed creation.
 
 
         
