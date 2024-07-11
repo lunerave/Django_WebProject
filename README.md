@@ -5,19 +5,25 @@ This project is done for understanding basic functionalities of Django.
 Python : 3.10.11
 
 ## DB schema
-Feed Table: image, content, email
+
+#### Feed Table 
+image, content, email
 
 
-Reply Table: feed_id, email, reply_content
+#### Reply Table 
+feed_id, email, reply_content
 
 
-Like Table: feed_id, email, is_like
+#### Like Table 
+feed_id, email, is_like
 
 
-Bookmark Table: feed_id, email, is_marked
+#### Bookmark Table
+feed_id, email, is_marked
 
 
-User Table: password, profile_img, name, email, nickname
+#### User Table
+password, profile_img, name, email, nickname
 
 ## How to run
     # Create virtual env(가상환경 생성) 
