@@ -200,6 +200,32 @@ This endpoint handles user's like data for each feed. User clicks the favorite b
   
 4. **Response**:
     - Returns a 200 status response upon successful like toggle.
+  
+#### POST /bookmark
+This endpoint handles user's bookmark data for each feed. User clicks the bookmark button in each feed to save the feed as bookmark. 
+
+#### Features
+
+- **Data Extraction**: Extracts feed ID and bookmark text from the request data.
+- **Bookmark Status Determination**: Determines whether to bookmark or un-bookmark the feed post based on the bookmark text.
+- **Bookmark Toggle**: Toggles the bookmark status for the specified feed post.
+
+#### Detailed Workflow
+
+1. **Data Extraction**:
+    - Retrieves the feed_id and bookmark_text from the request data.
+    - Retrieves the email from the session data.
+
+2. **Bookmark Status Determination**:
+    - Sets is_makred to True if bookmakr_text is 'bookmark', otherwise sets it to False.
+
+3. **Bookmark Toggle**:
+    - Searches for an existing Bookmark object with the specified feed ID and email.
+    - If a Bookmark object is found, updates its is_marked status.
+    - If no Bookmark object is found, creates a new Bookmark object with the specified feed ID, is_marked status, and email.
+  
+4. **Response**:
+    - Returns a 200 status response upon successful Bookmark toggle.
 
 
         
