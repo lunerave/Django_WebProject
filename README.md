@@ -289,4 +289,30 @@ This endpoint handles user logout by clearing the session and rendering the logi
 
 2. **Render Login Page**:
     - Renders the `login.html` page to allow users to log in again.
+  
+#### POST /profile/upload
+This endpoint handles the upload of a user's profile picture.
+
+#### Features
+
+- **File Upload**: Receives and saves a profile picture file.
+- **Profile Image Update**: Updates the user's profile image path in the database.
+
+#### Detailed Workflow
+
+1. **File Upload**:
+    - Retrieves the uploaded file from the request data.
+    - Generates a unique name (`uuid_name`) for the file to avoid conflicts.
+    - Constructs the save path using the `MEDIA_ROOT` and `uuid_name`.
+    - Writes the uploaded file chunks to the specified save path.
+
+2. **Profile Image Update**:
+    - Retrieves the user's email from the request data.
+    - Finds the corresponding user object in the database based on the email.
+    - Updates the `profile_img` field of the user object with the generated `uuid_name`.
+    - Saves the updated user object.
+
+3. **Response**:
+    - Returns a 200 status response upon successful profile image upload and update.
+
 
