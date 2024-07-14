@@ -114,6 +114,46 @@ This endpoint handles to upload new feed for logged-in user. User uploads their 
 
 4. **Response**:
     - Returns a 200 status response upon successful feed creation.
+  
+
+#### GET /profile
+This endpoint handles to show user's uploaded posts, favorite posts(Liked), bookmarked posts in user profile page.
+
+#### Features
+
+- **Session Handling**: Checks if the user is logged in via session data.
+- **User Validation**: Validates the logged-in user.
+- **User Feed Retrieval**: Fetches all posts created by the logged-in user.
+- **Liked Feed Retrieval**: Fetches all posts liked by the logged-in user.
+- **Bookmarked Feed Retrieval**: Fetches all posts bookmarked by the logged-in user.
+- **Contextual Rendering**: Prepares and renders the profile page with all the gathered information.
+
+#### Detailed Workflow
+
+1. **Session Check**:
+    - Retrieves the email from the session.
+    - If no email is found, redirects to the login page (`user/login.html`).
+
+2. **User Validation**:
+    - Searches for a user with the retrieved email.
+    - If no user is found, redirects to the login page (`user/login.html`).
+
+3. **Feed Retrieval**:
+    - Fetches all posts created by the logged-in user.
+
+4. **Liked Feed Retrieval**:
+    - Fetches the IDs of all posts liked by the logged-in user.
+    - Retrieves the corresponding feed posts.
+
+5. **Bookmarked Feed Retrieval**:
+    - Fetches the IDs of all posts bookmarked by the logged-in user.
+    - Retrieves the corresponding feed posts.
+
+6. **Context Preparation**:
+    - Prepares the context with the user's posts, liked posts, and bookmarked posts.
+
+7. **Render Page**:
+    - Renders the `profile.html` template with the context data.
 
 
         
