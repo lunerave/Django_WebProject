@@ -48,6 +48,7 @@ password, profile_img, name, email, nickname
 ## Endpoints
 This section details the currently existing API endpoints, and their specifications.   
 ### content
+
 #### GET /main
 This endpoint handles the main feed view for logged-in users. It processes user sessions, retrieves feed data, and renders the main feed page with the appropriate context.
 
@@ -227,5 +228,27 @@ This endpoint handles user's bookmark data for each feed. User clicks the bookma
 4. **Response**:
     - Returns a 200 status response upon successful Bookmark toggle.
 
+### user
+
+#### GET, POST /join
+
+#### Features
+
+- **Render Registration Page**: Renders the registration page for new users.
+- **User Registration**: Processes user registration data and creates a new user.
+
+#### Detailed Workflow
+
+1. **Render Registration Page**:
+    - On a `GET` request, renders the `join.html` page.
+
+2. **User Registration**:
+    - On a `POST` request:
+        - Retrieves the email, nickname, name, and password from the request data.
+        - Encrypts the password using Django's `make_password` function.
+        - Creates a new `User` object with the provided data and a default profile image.
+
+3. **Response**:
+    - Returns a 200 status response upon successful user creation.
 
         
