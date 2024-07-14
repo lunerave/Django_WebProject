@@ -274,4 +274,19 @@ This endpoint handles user login, rendering the login page and processing login 
         - If the password is correct, sets the user email in the session and returns a 200 status response.
         - If the password is incorrect, returns a 400 status response with an error message.
 
-        
+#### GET /logout
+This endpoint handles user logout by clearing the session and rendering the login page.
+
+#### Features
+
+- **Session Clearing**: Clears the user session data upon logout.
+- **Render Login Page**: Renders the login page after logout.
+
+#### Detailed Workflow
+
+1. **Session Clearing**:
+    - Clears all session data using `request.session.flush()`.
+
+2. **Render Login Page**:
+    - Renders the `login.html` page to allow users to log in again.
+
