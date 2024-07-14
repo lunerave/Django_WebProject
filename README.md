@@ -231,6 +231,7 @@ This endpoint handles user's bookmark data for each feed. User clicks the bookma
 ### user
 
 #### GET, POST /join
+This endpoint handles user registration, rendering the registration page and processing registration data to create new users.
 
 #### Features
 
@@ -250,5 +251,27 @@ This endpoint handles user's bookmark data for each feed. User clicks the bookma
 
 3. **Response**:
     - Returns a 200 status response upon successful user creation.
+  
+#### GET, POST /login
+This endpoint handles user login, rendering the login page and processing login data to authenticate users.
+
+#### Features
+
+- **Render Login Page**: Renders the login page for users.
+- **User Authentication**: Processes login data to authenticate users.
+
+#### Detailed Workflow
+
+1. **Render Login Page**:
+    - On a `GET` request, renders the `login.html` page.
+
+2. **User Authentication**:
+    - On a `POST` request:
+        - Retrieves the email and password from the request data.
+        - Searches for a user with the provided email.
+        - If no user is found, returns a 400 status response with an error message.
+        - Checks the provided password against the stored password.
+        - If the password is correct, sets the user email in the session and returns a 200 status response.
+        - If the password is incorrect, returns a 400 status response with an error message.
 
         
