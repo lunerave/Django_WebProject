@@ -154,6 +154,24 @@ This endpoint handles to show user's uploaded posts, favorite posts(Liked), book
 
 7. **Render Page**:
     - Renders the `profile.html` template with the context data.
+  
+#### POST /reply
+This endpoint handles to upload reply to the someone's feed. User enters comment in the comment box in each feed.
 
+#### Features
 
+- **Data Extraction**: Extracts feed ID, reply content, and email from the request data.
+- **Reply Creation**: Creates a new reply for the specified feed post.
+
+#### Detailed Workflow
+
+1. **Data Extraction**:
+    - Retrieves the `feed_id` and `reply_content` from the request data.
+    - Retrieves the email from the session data.
+
+2. **Reply Creation**:
+    - Creates a new `Reply` object with the specified feed ID, reply content, and email.
+
+3. **Response**:
+    - Returns a 200 status response upon successful reply creation.
         
