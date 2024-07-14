@@ -174,4 +174,32 @@ This endpoint handles to upload reply to the someone's feed. User enters comment
 
 3. **Response**:
     - Returns a 200 status response upon successful reply creation.
+
+#### POST /like
+This endpoint handles user's like data for each feed. User clicks the favorite button in each feed to like the feed. 
+
+#### Features
+
+- **Data Extraction**: Extracts feed ID and favorite text from the request data.
+- **Like Status Determination**: Determines whether to like or unlike the feed post based on the favorite text.
+- **Like Toggle**: Toggles the like status for the specified feed post.
+
+#### Detailed Workflow
+
+1. **Data Extraction**:
+    - Retrieves the feed_id and favorite_text from the request data.
+    - Retrieves the email from the session data.
+
+2. **Like Status Determination**:
+    - Sets is_like to True if favorite_text is 'favorite', otherwise sets it to False.
+
+3. **Like Toggle**:
+    - Searches for an existing Like object with the specified feed ID and email.
+    - If a Like object is found, updates its is_like status.
+    - If no Like object is found, creates a new Like object with the specified feed ID, is_like status, and email.
+  
+4. **Response**:
+    - Returns a 200 status response upon successful like toggle.
+
+
         
