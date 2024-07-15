@@ -73,3 +73,4 @@ class UploadProfile(APIView):
         user.save()
 
         return Response(status=200)
+
