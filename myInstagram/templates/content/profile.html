@@ -201,7 +201,7 @@ bookmark
                 <div>
                     <img class="hover_effect" style="width: 300px; height: 300px; object-fit: cover"
                           src="{% get_media_prefix %}{{ feed.image }}">
-                    <button class="delete_button">삭제</button>
+                    <button feed_id="{{ feed.id }}" class="delete_button">삭제</button>
                 </div>
             </div>
 
@@ -291,6 +291,30 @@ close
 </div>
 <!-- Optional JavaScript; choose one of the two! -->
 <script>
+
+    $('.delete_button').click(function (event) {
+        let feed_id = event.target.attributes.getNamedItem('feed_id').value;
+        console.log(feed_id);
+        
+        $.ajax({
+            url: "/content/delete",
+            data: {
+                feed_id: feed_id,
+            },
+            method: "POST",
+
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("완료");
+                location.replace("/content/profile");
+            }
+        })
+    })
     
     $('#btn_feed_list').click(function () {
         $('#feed_list').css({

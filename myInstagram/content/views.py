@@ -162,6 +162,15 @@ class ToggleBookmark(APIView):
         return Response(status=200)
 
 
+class DeleteFeed(APIView):
+    def post(self, request):
+        feed_id = request.data.get('feed_id', None)
+
+        Feed.objects.filter(id=feed_id).delete()
+
+        return Response(status=200)
+
+
 
 
 
