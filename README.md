@@ -227,6 +227,22 @@ This endpoint handles user's bookmark data for each feed. User clicks the bookma
   
 4. **Response**:
     - Returns a 200 status response upon successful Bookmark toggle.
+  
+#### POST /delete
+This endpoint handles delete function for created feeds. Users delete feeds by hovering the mouse pointer over a post on their profile page and pressing the delete button.
+
+#### Features
+
+- **Feed Deletion**: Deletes a feed post from the database.
+
+#### Detailed Workflow
+
+1. **Feed Deletion**:
+    - Retrieves the `feed_id` from the request data.
+    - Deletes the feed post with the corresponding `feed_id` from the database using `Feed.objects.filter(id=feed_id).delete()`.
+
+2. **Response**:
+    - Returns a 200 status response upon successful deletion of the feed post.
 
 ### user
 
