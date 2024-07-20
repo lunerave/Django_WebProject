@@ -1,6 +1,10 @@
 # Django_familySNS
 Develop clone Instagram in Python with Django.
 This project is done for understanding basic functionalities of Django and Web develop.
+
+## Skills
+Django, uwsgi, nginx, AWS EC2, SQLite
+
 ## version
 Python : 3.10.11
 
