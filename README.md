@@ -11,6 +11,9 @@ Django, uwsgi, nginx, AWS EC2, SQLite
 ## version
 Python : 3.10.11
 
+## DB
+Mysql
+
 ## DB schema
 
 #### Feed Table 
