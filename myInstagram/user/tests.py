@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django.test import TestCase
 
 from user.models import User
@@ -7,6 +8,16 @@ from user.models import User
 
 
 class UserTest(TestCase):
+
+    # test data를 미리 생성해서 test할 때 사용한다.
+    @classmethod
+    def setUpTestData(cls):
+        User.objects.create(
+            email='test_login_email@naver.com',
+            nickname='test_login_nickname',
+            name='test_name',
+            password=make_password('test_password'))
+
     def test(self):
         self.assertEqual(1, 1)
 
@@ -23,3 +34,9 @@ class UserTest(TestCase):
         self.assertEqual(user.nickname, 'test_nickname')
         self.assertEqual(user.name, 'test_name')
         self.assertTrue(user.check_password('test_password'))
+
+    def test_login(self):
+        response = self.client.post('/user/login', data=dict(
+            email='test_login_email@naver.com',
+            password='test_password'))
+        self.assertEqual(response.status_code, 200)
