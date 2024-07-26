@@ -6,13 +6,13 @@ This project is done for understanding basic functionalities of Django and Web d
 http://leesns.duckdns.org/main
 
 ## Skills
-Django, uwsgi, nginx, AWS EC2, SQLite
+Django, uwsgi, Python, nginx, AWS EC2, SQLite3, MySQL, Docker, github action(CI/CD)
 
 ## version
 Python : 3.10.11
 
 ## DB
-Mysql
+SQLite3, MySQL
 
 ## DB schema
 
