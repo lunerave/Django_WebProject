@@ -340,5 +340,14 @@ This endpoint handles the upload of a user's profile picture.
 
 3. **Response**:
     - Returns a 200 status response upon successful profile image upload and update.
+  
+## RoadMap
+This section lists possible future works.
+
+### 1. Chat window for users
+
+### 2. Follow users
+
+
 
 
