@@ -346,7 +346,9 @@ This section lists possible future works.
 
 ### 1. Chat window for users
 
-### 2. Follow users
+### 2. Follow user
+
+### 3. User search
 
 
 
