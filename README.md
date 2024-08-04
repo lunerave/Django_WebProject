@@ -1,4 +1,4 @@
-# Django_familySNS
+# Django_WebProject
 Develop clone Instagram in Python with Django.
 This project is done for understanding basic functionalities of Django and Web develop.
 
@@ -17,23 +17,23 @@ SQLite3, MySQL
 ## DB schema
 
 #### Feed Table 
-image, content, email
+id, image, content, email
 
 
 #### Reply Table 
-feed_id, email, reply_content
+id, feed_id, email, reply_content
 
 
 #### Like Table 
-feed_id, email, is_like
+id, feed_id, email, is_like
 
 
 #### Bookmark Table
-feed_id, email, is_marked
+id, feed_id, email, is_marked
 
 
 #### User Table
-password, profile_img, name, email, nickname
+id, password, profile_img, name, email, nickname
 
 ## How to run
     # Create virtual env(가상환경 생성) 
