@@ -1,5 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from django.test import TestCase
+from django.urls import reverse
 
 from user.models import User
 
@@ -40,3 +41,11 @@ class UserTest(TestCase):
             email='test_login_email@naver.com',
             password='test_password'))
         self.assertEqual(response.status_code, 200)
+
+    def test_logout(self):
+        response = self.client.get('/user/logout')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'user/login.html')
+
+        self.assertFalse('_auth_user_id' in self.client.session)
