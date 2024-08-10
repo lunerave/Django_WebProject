@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'myInstagram',
     'content',
     'user',
+    'chat',
 ]
 
 MIDDLEWARE = [
