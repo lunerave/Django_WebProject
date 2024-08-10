@@ -26,6 +26,7 @@ urlpatterns = [
     path('main', Main.as_view()),
     path('content/', include('content.urls')),
     path('user/', include('user.urls')),
+    path('chat/', include('chat.urls')),
 ]
 
 # media에 저장한 파일을 조회하기 위한 코드
