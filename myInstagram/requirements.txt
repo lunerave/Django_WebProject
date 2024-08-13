@@ -5,3 +5,5 @@ pytz
 sqlparse
 typing-extensions
 channels
+channels-redis
+daphne
