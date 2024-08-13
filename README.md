@@ -55,6 +55,15 @@ id, password, profile_img, name, email, nickname
     # Connect(브라우져로 접속)
     http://127.0.0.1:8000/main/
 
+## Chat
+    To use the chat function in a local environment, Redis server must be turned on in your local environment.
+    
+    Also, you need to modify template in the project.
+    1. Direct to templates/myInstagram/main.
+    2. Use find function by "ctrl + f" and search "local test". Then, you should comment out code for production environments and uncomment code for local testing.
+    
+    Now, you can check the Chat feature with "python manage.py runserver" command
+
 ## Endpoints
 This section details the currently existing API endpoints, and their specifications.   
 ### content
@@ -344,11 +353,9 @@ This endpoint handles the upload of a user's profile picture.
 ## RoadMap
 This section lists possible future works.
 
-### 1. Chat window for users
+### 1. Follow user
 
-### 2. Follow user
-
-### 3. User search
+### 2. User search
 
 
 
