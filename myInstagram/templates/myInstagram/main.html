@@ -588,7 +588,7 @@ close
     chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
         const chatLog = document.querySelector('#chat-log');
-        chatLog.innerHTML += (data.message + '<br>');
+        chatLog.innerHTML += ('<strong>' + data.nickname + ':</strong> ' + data.message + '<br>');
         chatLog.scrollTop = chatLog.scrollHeight;  // 자동 스크롤
     };
 
@@ -606,8 +606,10 @@ close
     document.querySelector('#send-btn').onclick = function (e) {
         const inputDom = document.querySelector('#chat-message-input');
         const message = inputDom.value;
+        const nickname = '{{ user.nickname }}';
         chatSocket.send(JSON.stringify({
-            'message': message
+            'message': message,
+            'nickname': nickname
         }));
         inputDom.value = '';
     };

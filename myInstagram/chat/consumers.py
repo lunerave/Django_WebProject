@@ -1,6 +1,8 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+import logging
 
+logger = logging.getLogger(__name__)
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -23,22 +25,27 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data):
+        logger.info(f"Received data: {text_data}")
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
+        nickname = text_data_json['nickname']
 
         # 메시지를 같은 그룹의 모든 클라이언트에 브로드캐스트
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'nickname': nickname
             }
         )
 
     async def chat_message(self, event):
         message = event['message']
+        nickname = event['nickname']
 
         # 웹 소켓을 통해 메시지 전송
         await self.send(text_data=json.dumps({
-            'message': message
+            'message': message,
+            'nickname': nickname
         }))
