@@ -1,6 +1,6 @@
 # Django_WebProject
-Develop clone Instagram in Python with Django.
-This project is done for understanding basic functionalities of Django and Web develop.
+Develop Web community platform by cloning SNS features in Python with Django.
+This project is done for understanding basic functionalities of Django and Web develop plus DevOps skills.
 
 ## URL
 http://leesns.duckdns.org/main
