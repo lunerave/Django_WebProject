@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from .models import User
 from django.contrib.auth.hashers import make_password
 
+
 # Create your views here.
 class Join(APIView):
     def get(self, request):

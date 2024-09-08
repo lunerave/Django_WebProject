@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Feed, Reply, Like, Bookmark
 from user.models import User
+from django.conf import settings
+
 from myInstagram.settings import MEDIA_ROOT
 
 
@@ -57,7 +59,7 @@ class UploadFeed(APIView):
     def post(self, request):
         file = request.FILES['file']
         uuid_name = uuid4().hex
-        save_path = os.path.join(MEDIA_ROOT, uuid_name)
+        save_path = os.path.join(settings.MEDIA_ROOT, uuid_name)
 
         # 실제로 파일을 저장하는 코드
         with open(save_path, 'wb+') as destination:

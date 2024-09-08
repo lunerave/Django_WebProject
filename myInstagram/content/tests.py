@@ -1,6 +1,10 @@
+import os
+import tempfile
+
 from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 
@@ -41,6 +45,21 @@ class ContentTest(TestCase):
         cls.like2 = Like.objects.create(feed_id=cls.other_feed.id, email=cls.user.email, is_like=True)
         cls.bookmark = Bookmark.objects.create(feed_id=cls.feed.id, email=cls.user.email, is_marked=True)
 
+    def setUp(self):
+        # 임시 디렉토리 생성 및 MEDIA_ROOT 설정
+        self.media_root = tempfile.mkdtemp()
+        self.original_media_root = settings.MEDIA_ROOT
+        settings.MEDIA_ROOT = self.media_root
+
+    def tearDown(self):
+        # MEDIA_ROOT 재설정 및 임시 디렉토리 정리
+        settings.MEDIA_ROOT = self.original_media_root
+        if os.path.exists(self.media_root):
+            for file_name in os.listdir(self.media_root):
+                file_path = os.path.join(self.media_root, file_name)
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+            os.rmdir(self.media_root)
 
     def testMain(self):
         session = self.client.session
