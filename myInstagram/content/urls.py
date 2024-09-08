@@ -7,7 +7,7 @@ urlpatterns = [
     path('like', ToggleLike.as_view()),
     path('reply', UploadReply.as_view()),
     path('upload', UploadFeed.as_view(), name='upload_feed'),
-    path('profile', Profile.as_view()),
+    path('profile', Profile.as_view(), name='profile'),
     path('main', Main.as_view(), name='main'),
 ]
 

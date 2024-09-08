@@ -23,11 +23,24 @@ class ContentTest(TestCase):
             password=make_password('test_password')
         )
 
+        # Profile API를 위한 다른 임시 유저의 임시 피드 생성
+        # 좋아요, 북마크한 피드들에 대해서만 API가 작동하는 지 확인 하기 위한 데이터
+        cls.other_user = cls.User.objects.create(
+            email='other_user@example.com',
+            nickname='other_user',
+            name='other_user_name',
+            password=make_password('other_password')
+        )
+
         # 피드, 댓글, 좋아요, 북마크 등 데이터 생성
         cls.feed = Feed.objects.create(email=cls.user.email, content="Test feed content", image="test_image.jpg")
+        cls.other_feed = Feed.objects.create(email=cls.other_user.email, content="Other user feed content",
+                                             image="other_feed_image.jpg")
         cls.reply = Reply.objects.create(feed_id=cls.feed.id, email=cls.user.email, reply_content="Test reply")
         cls.like = Like.objects.create(feed_id=cls.feed.id, email=cls.user.email, is_like=True)
+        cls.like2 = Like.objects.create(feed_id=cls.other_feed.id, email=cls.user.email, is_like=True)
         cls.bookmark = Bookmark.objects.create(feed_id=cls.feed.id, email=cls.user.email, is_marked=True)
+
 
     def testMain(self):
         session = self.client.session
@@ -46,9 +59,10 @@ class ContentTest(TestCase):
         self.assertTemplateUsed(response, 'myInstagram/main.html')
 
         # 피드 데이터가 템플릿 컨텍스트에 포함되어 있는지 확인
+        # 마지막 피드가 가장 첫 번째 위치에 저장 된다.
         feeds = response.context['feeds']
-        self.assertEqual(len(feeds), 1)
-        self.assertEqual(feeds[0]['content'], "Test feed content")
+        self.assertEqual(len(feeds), 2)
+        self.assertEqual(feeds[0]['content'], "Other user feed content")
 
         # 사용자 데이터가 포함되어 있는지 확인
         user = response.context['user']
@@ -70,7 +84,7 @@ class ContentTest(TestCase):
         # POST 요청을 통해 피드 업로드
         data = {
             'file': test_image,
-            'content': 'Test feed content',
+            'content': 'Test feed content2',
         }
         response = self.client.post(reverse('upload_feed'), data, format='multipart')
 
@@ -78,11 +92,54 @@ class ContentTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Feed 객체가 생성되었는지 확인
-        # 사용자 데이터 생성에서 1개, 해당 API를 통해 1개 -> 총 2개 피드
-        self.assertEqual(Feed.objects.count(), 2)
-        feed = Feed.objects.first()
+        # 사용자 데이터 생성에서 2개, 해당 API를 통해 1개 -> 총 3개 피드
+        self.assertEqual(Feed.objects.count(), 3)
+
+        # Main API가 실행되기 전까지는 피드가 id 역순으로 정렬되지 않는다.
+        feed = Feed.objects.last()
 
         # 피드가 올바른 데이터로 생성되었는지 확인
         self.assertEqual(feed.email, self.user.email)
-        self.assertEqual(feed.content, 'Test feed content')
+        self.assertEqual(feed.content, 'Test feed content2')
         self.assertTrue(feed.image)  # 이미지가 저장되었는지 확인
+
+    def testProfile(self):
+        # 세션에 이메일 저장
+        session = self.client.session
+        session['email'] = self.user.email
+        session.save()
+
+        # GET 요청을 통해 프로필 페이지 접근
+        response = self.client.get(reverse('profile'))
+
+        # 응답 상태 코드 확인
+        self.assertEqual(response.status_code, 200)
+
+        # 컨텍스트에 사용자 정보가 제대로 포함되었는지 확인
+        self.assertIn('user', response.context)
+        self.assertEqual(response.context['user'].email, self.user.email)
+
+        # 사용자의 피드 리스트가 1개인지 확인
+        self.assertIn('feed_list', response.context)
+        self.assertEqual(len(response.context['feed_list']), 1)
+        self.assertEqual(response.context['feed_list'][0].content, 'Test feed content')
+
+        # 사용자가 좋아요한 피드 리스트 확인
+        # 사용자가 좋아요한 피드는 총 2개이다.
+        self.assertIn('like_feed_list', response.context)
+        self.assertEqual(len(response.context['like_feed_list']), 2)
+        self.assertEqual(response.context['like_feed_list'][0].content, 'Test feed content')
+        self.assertEqual(response.context['like_feed_list'][1].content, 'Other user feed content')
+
+
+        # 사용자가 북마크한 피드 리스트 확인
+        self.assertIn('bookmark_feed_list', response.context)
+        self.assertEqual(len(response.context['bookmark_feed_list']), 1)
+        self.assertEqual(response.context['bookmark_feed_list'][0].content, 'Test feed content')
+
+        # 다른 사용자의 피드가 잘 포함되지 않았는지 확인
+        self.assertNotIn(self.other_feed, response.context['feed_list'])
+
+        # 북마크하지 않은 피드가 잘 포함되지 않았는지 확인
+        bookmark_feed_list = response.context['bookmark_feed_list']
+        self.assertNotIn(self.other_feed, bookmark_feed_list)
