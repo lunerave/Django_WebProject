@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
@@ -52,3 +53,36 @@ class ContentTest(TestCase):
         # 사용자 데이터가 포함되어 있는지 확인
         user = response.context['user']
         self.assertEqual(user.email, self.user.email)
+
+    def testUploadFeed(self):
+        # 세션에 이메일 저장
+        session = self.client.session
+        session['email'] = self.user.email
+        session.save()
+
+        # 가짜 이미지 파일 생성
+        test_image = SimpleUploadedFile(
+            name='test_image.jpg',
+            content=b'\x00\x01\x02',  # 가짜 이미지 파일 생성
+            content_type='image/jpeg'
+        )
+
+        # POST 요청을 통해 피드 업로드
+        data = {
+            'file': test_image,
+            'content': 'Test feed content',
+        }
+        response = self.client.post(reverse('upload_feed'), data, format='multipart')
+
+        # 응답 상태 코드 확인
+        self.assertEqual(response.status_code, 200)
+
+        # Feed 객체가 생성되었는지 확인
+        # 사용자 데이터 생성에서 1개, 해당 API를 통해 1개 -> 총 2개 피드
+        self.assertEqual(Feed.objects.count(), 2)
+        feed = Feed.objects.first()
+
+        # 피드가 올바른 데이터로 생성되었는지 확인
+        self.assertEqual(feed.email, self.user.email)
+        self.assertEqual(feed.content, 'Test feed content')
+        self.assertTrue(feed.image)  # 이미지가 저장되었는지 확인
