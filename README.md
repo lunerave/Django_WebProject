@@ -5,6 +5,10 @@ This project is done for understanding basic functionalities of Django and Web d
 ## URL
 http://leesns.duckdns.org/main
 
+You can try the service with temporary user ID. Here I provide email and password of temp user.
+Email: temp
+Password: temp
+
 ## Skills
 Django, uwsgi, Python, nginx, AWS EC2, SQLite3, MySQL, Docker, github action(CI/CD), Redis, Daphne
 
