@@ -6,7 +6,11 @@ This project is done for understanding basic functionalities of Django and Web d
 http://leesns.duckdns.org/main
 
 You can try the service with temporary user ID. Here I provide email and password of temp user.
+
+
 Email: temp
+
+
 Password: temp
 
 ## Skills
