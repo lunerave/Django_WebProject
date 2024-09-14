@@ -365,6 +365,8 @@ This section lists possible future works.
 
 ### 2. User search
 
+### 3. Categorized community platform
+
 
 
 
