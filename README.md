@@ -22,6 +22,9 @@ Python : 3.10.11
 ## DB
 SQLite3, MySQL
 
+In the database setup of the deployment environment, the virtual server is experiencing a downtime due to memory shortage on the virtual server. 
+
+Therefore, SQLite3 DB will be used temporarily until the problem is resolved.
 ## DB schema
 
 #### Feed Table 
@@ -73,7 +76,7 @@ id, password, profile_img, name, email, nickname
     Now, you can check the Chat feature with "python manage.py runserver" command
 
 ## Endpoints
-This section details the currently existing API endpoints, and their specifications.   
+This section explains details of the currently existing API endpoints, and their specifications.   
 ### content
 
 #### GET /main
