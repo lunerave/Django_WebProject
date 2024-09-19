@@ -150,7 +150,6 @@ class ContentTest(TestCase):
         self.assertEqual(response.context['like_feed_list'][0].content, 'Test feed content')
         self.assertEqual(response.context['like_feed_list'][1].content, 'Other user feed content')
 
-
         # 사용자가 북마크한 피드 리스트 확인
         self.assertIn('bookmark_feed_list', response.context)
         self.assertEqual(len(response.context['bookmark_feed_list']), 1)
@@ -162,3 +161,30 @@ class ContentTest(TestCase):
         # 북마크하지 않은 피드가 잘 포함되지 않았는지 확인
         bookmark_feed_list = response.context['bookmark_feed_list']
         self.assertNotIn(self.other_feed, bookmark_feed_list)
+
+    def testUploadReply(self):
+        # 세션에 이메일 저장
+        session = self.client.session
+        session['email'] = self.user.email
+        session.save()
+
+        data = {
+            'feed_id': self.feed.id,
+            'reply_content': 'Test reply',
+        }
+
+        # 댓글 데이터 POST 전송
+        response = self.client.post(reverse('upload_reply'), data, format='multipart')
+
+        # 응답 상태 코드 확인
+        self.assertEqual(response.status_code, 200)
+
+        # 테스트 셋업 데이터 + 테스트 함수
+        self.assertEqual(Reply.objects.count(), 2)
+
+        # 생성된 댓글 정상 저장 확인
+        reply = Reply.objects.first()
+        self.assertEqual(reply.feed_id, self.feed.id)
+        self.assertEqual(reply.reply_content, 'Test reply')
+        self.assertEqual(reply.email, self.user.email)
+

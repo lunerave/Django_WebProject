@@ -66,7 +66,6 @@ class UploadFeed(APIView):
             for chunk in file.chunks():
                 destination.write(chunk)
 
-
         image = uuid_name
         content = request.data.get('content')
         email = request.session.get('email', None)
