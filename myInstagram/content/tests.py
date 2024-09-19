@@ -188,3 +188,35 @@ class ContentTest(TestCase):
         self.assertEqual(reply.reply_content, 'Test reply')
         self.assertEqual(reply.email, self.user.email)
 
+    def testToggleLike(self):
+        # 세션에 이메일 저장
+        session = self.client.session
+        session['email'] = self.user.email
+        session.save()
+
+        test_toggle_like_feed = Feed.objects.create(email=self.user.email, content="Toggle like test feed content",
+                                                    image="toggle_like_feed.jpg")
+
+        data = {
+            'feed_id': test_toggle_like_feed.id,
+            'favorite_text': 'favorite'
+        }
+
+        response = self.client.post(reverse('toggle_like'), data)
+
+        # 응답 상태 코드 확인
+        self.assertEqual(response.status_code, 200)
+
+        # Like 객체가 생성되었는지 확인
+        self.assertEqual(Like.objects.count(), 3)
+
+        # 생성된 Like 객체의 is_like 값 확인
+        like = Like.objects.last()
+        self.assertTrue(like.is_like)
+
+        # 좋아요 상태가 올바르게 저장되었는지 확인
+        self.assertEqual(like.feed_id, test_toggle_like_feed.id)
+        self.assertEqual(like.email, self.user.email)
+
+
+

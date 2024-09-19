@@ -118,8 +118,6 @@ class ToggleLike(APIView):
         feed_id = request.data.get('feed_id', None)
         favorite_text = request.data.get('favorite_text', True)
 
-        print(favorite_text)
-
         if favorite_text == 'favorite':
             is_like = True
         else:
