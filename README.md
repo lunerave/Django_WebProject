@@ -370,6 +370,10 @@ This section lists possible future works.
 
 ### 3. Categorized community platform
 
+### 4. Apply Https
+- received request from user which is about Mac could not access the project due to a permission issue.
+- need more security skills for the users since the project is mainly serving community platform's functionalities.
+
 
 
 
