@@ -3,7 +3,7 @@ from .views import UploadFeed, Profile, Main, UploadReply, ToggleLike, ToggleBoo
 
 urlpatterns = [
     path('delete', DeleteFeed.as_view()),
-    path('bookmark', ToggleBookmark.as_view()),
+    path('bookmark', ToggleBookmark.as_view(), name='toggle_bookmark'),
     path('like', ToggleLike.as_view(), name='toggle_like'),
     path('reply', UploadReply.as_view(), name='upload_reply'),
     path('upload', UploadFeed.as_view(), name='upload_feed'),

@@ -218,5 +218,67 @@ class ContentTest(TestCase):
         self.assertEqual(like.feed_id, test_toggle_like_feed.id)
         self.assertEqual(like.email, self.user.email)
 
+    def testToggleBookmarkCreate(self):
+        # 세션에 이메일 저장
+        session = self.client.session
+        session['email'] = self.user.email
+        session.save()
+
+        bookmark_feed = Feed.objects.create(email=self.user.email, content="Toggle bookmark test feed content",
+                                            image="bookmark_feed.jpg")
+
+        data = {
+            'feed_id': bookmark_feed.id,
+            'bookmark_text': 'bookmark'
+        }
+
+        response = self.client.post(reverse('toggle_bookmark'), data)
+
+        # 응답 상태 코드 확인
+        self.assertEqual(response.status_code, 200)
+
+        # Bookmark 객체가 생성되었는지 확인
+        self.assertEqual(Bookmark.objects.count(), 2)
+
+        # Bookmark 객체가 올바르게 생성되었는지 확인
+        bookmark = Bookmark.objects.last()
+        self.assertTrue(bookmark.is_marked)
+        self.assertEqual(bookmark.email, self.user.email)
+        self.assertEqual(bookmark.feed_id, bookmark_feed.id)
+
+    def testToggleBookmarkDelete(self):
+        # 세션에 이메일 저장
+        session = self.client.session
+        session['email'] = self.user.email
+        session.save()
+
+        bookmark_feed = Feed.objects.create(email=self.user.email, content="Toggle bookmark test feed content",
+                                            image="bookmark_feed.jpg")
+
+        # 미리 북마크 생성
+        Bookmark.objects.create(feed_id=bookmark_feed.id, is_marked=True, email=self.user.email)
+
+        # 북마크 해제 요청 (bookmark_text='bookmark_delete')
+        data = {
+            'feed_id': bookmark_feed.id,
+            'bookmark_text': 'bookmark_delete'
+        }
+
+        # 북마크 해제 요청 전송
+        response = self.client.post(reverse('toggle_bookmark'), data)
+
+        # 응답 상태 코드 확인
+        self.assertEqual(response.status_code, 200)
+
+        # 북마크가 해제되었는지 확인
+        bookmark = Bookmark.objects.last()
+        self.assertFalse(bookmark.is_marked)
+        self.assertEqual(bookmark.email, self.user.email)
+        self.assertEqual(bookmark.feed_id, bookmark_feed.id)
+
+
+
+
+
 
 
