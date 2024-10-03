@@ -20,6 +20,14 @@ class Join(APIView):
         name = request.data.get('name', None)
         password = request.data.get('password', None)
 
+        # 이메일 중복 체크
+        if User.objects.filter(email=email).exists():
+            return Response({'error': 'email_exists'}, status=400)
+
+        # 닉네임 중복 체크
+        if User.objects.filter(nickname=nickname).exists():
+            return Response({'error': 'nickname_exists'}, status=400)
+
         User.objects.create(email=email, nickname=nickname, name=name, password=make_password(password), profile_img='default_profile.jpg')
 
         return Response(status=200)

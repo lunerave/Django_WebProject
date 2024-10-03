@@ -82,8 +82,15 @@
                   location.replace('/user/login')
               },
               error: function (request, status, error) {
+                  let res = JSON.parse(request.responseText);
                   console.log("에러");
-                  alert("예측하지 못한 오류가 발생하였습니다. 다시 시도해주세요.")
+                  if (res.error === 'email_exists') {
+                      alert("이미 사용 중인 이메일입니다. 다른 이메일을 사용해주세요.");
+                  } else if (res.error === 'nickname_exists') {
+                      alert("이미 사용 중인 닉네임입니다. 다른 닉네임을 사용해주세요.");
+                  } else {
+                      alert("예측하지 못한 오류가 발생하였습니다. 다시 시도해주세요.");
+                  }
               },
               complete: function () {
                   console.log("완료");
