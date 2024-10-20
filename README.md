@@ -374,6 +374,10 @@ This section lists possible future works.
 - received request from user which is about Mac could not access the project due to a permission issue.
 - need more security skills for the users since the project is mainly serving community platform's functionalities.
 
+### 5. Request space
+- make request space in somewhere main page
+- user can request for the images what they want to see!
+
 
 
 
