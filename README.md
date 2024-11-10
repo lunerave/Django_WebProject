@@ -1,7 +1,8 @@
 # Django_WebProject
 Develop Web community platform by cloning SNS features in Python with Django.
-This project is done for understanding basic functionalities of Django and Web develop plus DevOps skills.
+This project is done for understanding basic functionalities of Django and Web develop plus DevOps skills. 
 
+The basic function and concept provided by this service is to provide media of the users' companion dogs and cats to interact with each other users.
 ## URL
 http://leesns.duckdns.org/main
 
